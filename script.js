@@ -1,3 +1,8 @@
+const playButton = document.querySelector(".play");
+const documentText = document.querySelector(".text");
+
+playButton.addEventListener("click", () => playRound());
+
 const getComputerChoice = () => {
     const value = Math.floor(Math.random() * 3);
     let result = "";
@@ -24,13 +29,13 @@ function playRound(playerSelection, computerSelection){
     computerSelection = getComputerChoice();
     const announce = x => {
         if (x === "draw") {
-            console.log(`It's a draw! You both chose ${playerSelection}`);
+            documentText.innerHTML = (`It's a draw! You both chose ${playerSelection}`);
         } else if (x === "lose") {
-            console.log(`You lose! You chose ${playerSelection}, PC chose ${computerSelection}`);
+            documentText.innerHTML = (`You lose! You chose ${playerSelection}, PC chose ${computerSelection}`);
         } else if (x === "win") {
-            console.log(`You win! You chose ${playerSelection}, PC chose ${computerSelection}`);
+            documentText.innerHTML = (`You win! You chose ${playerSelection}, PC chose ${computerSelection}`);
         } else {
-            console.log("You must choose paper, rock, or scissors.");
+            documentText.innerHTML = ("You must choose paper, rock, or scissors.");
         }
     }
     if (playerSelection === computerSelection) {announce("draw");}
@@ -42,5 +47,3 @@ function playRound(playerSelection, computerSelection){
               playerSelection === "paper" && computerSelection === "scissors") {announce("lose");}
     else {announce()};
 }
-
-playRound();
