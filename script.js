@@ -22,18 +22,23 @@ const getComputerChoice = () => {
     return result;
 }
 
+const capitalize = string => {
+    let newString = string.toLowerCase();  
+    newString = newString.replace(newString[0], newString[0].toUpperCase());
+    return newString;
+}
+
 function playRound(playerSelection, computerSelection){
-    let result = "";
     let userInput = prompt("Rock, Paper, Scissors?");
     playerSelection = userInput.toLowerCase();
     computerSelection = getComputerChoice();
     const announce = x => {
         if (x === "draw") {
-            documentText.innerHTML = (`It's a draw! You both chose ${playerSelection}`);
+            documentText.innerHTML = (`It's a draw!<br>You both chose ${playerSelection}.`);
         } else if (x === "lose") {
-            documentText.innerHTML = (`You lose! You chose ${playerSelection}, PC chose ${computerSelection}`);
+            documentText.innerHTML = (`You lose!<br>${capitalize(computerSelection)} beats ${playerSelection}.`);
         } else if (x === "win") {
-            documentText.innerHTML = (`You win! You chose ${playerSelection}, PC chose ${computerSelection}`);
+            documentText.innerHTML = (`You win!<br>${capitalize(playerSelection)} beats ${computerSelection}.`);
         } else {
             documentText.innerHTML = ("You must choose paper, rock, or scissors.");
         }
@@ -47,3 +52,4 @@ function playRound(playerSelection, computerSelection){
               playerSelection === "paper" && computerSelection === "scissors") {announce("lose");}
     else {announce()};
 }
+
