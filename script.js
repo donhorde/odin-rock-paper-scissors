@@ -1,7 +1,8 @@
 const playButton = document.querySelector(".play");
 const documentText = document.querySelector(".text");
+const documentScore = document.querySelector(".score");
 
-playButton.addEventListener("click", () => playRound());
+playButton.addEventListener("click", () => playGame());
 
 const getComputerChoice = () => {
     const value = Math.floor(Math.random() * 3);
@@ -28,28 +29,49 @@ const capitalize = string => {
     return newString;
 }
 
-function playRound(playerSelection, computerSelection){
-    let userInput = prompt("Rock, Paper, Scissors?");
-    playerSelection = userInput.toLowerCase();
-    computerSelection = getComputerChoice();
-    const announce = x => {
-        if (x === "draw") {
-            documentText.innerHTML = (`It's a draw!<br>You both chose ${playerSelection}.`);
-        } else if (x === "lose") {
-            documentText.innerHTML = (`You lose!<br>${capitalize(computerSelection)} beats ${playerSelection}.`);
-        } else if (x === "win") {
-            documentText.innerHTML = (`You win!<br>${capitalize(playerSelection)} beats ${computerSelection}.`);
-        } else {
-            documentText.innerHTML = ("You must choose paper, rock, or scissors.");
+const scoreKeeper = {
+    pcScore : 0,
+    playerScore : 0,
+}
+
+function playGame() {
+    /* let pcScore = 0;
+    let playerScore = 0; */
+    function playRound(playerSelection, computerSelection){
+        let userInput = prompt("Rock, Paper, Scissors?");
+        if (userInput !== null) {playerSelection = userInput.toLowerCase()};
+        computerSelection = getComputerChoice();
+        const announce = x => {
+            if (x === "draw") {
+                documentText.innerHTML = (`It's a draw!<br>You both chose ${playerSelection}.`);
+            } else if (x === "lose") {
+                documentText.innerHTML = (`You lose!<br>${capitalize(computerSelection)} beats ${playerSelection}.`);
+                ++scoreKeeper.pcScore;
+            } else if (x === "win") {
+                documentText.innerHTML = (`You win!<br>${capitalize(playerSelection)} beats ${computerSelection}.`);
+                ++scoreKeeper.playerScore;
+            } else {
+                documentText.innerHTML = ("You must choose paper, rock, or scissors.");
+            }
         }
+        if (playerSelection === computerSelection) {announce("draw");}
+        else if  (playerSelection === "paper" && computerSelection === "rock" ||
+                playerSelection === "rock" && computerSelection === "scissors" ||
+                playerSelection === "scissors" && computerSelection === "paper") {announce("win");}
+        else if  (playerSelection === "rock" && computerSelection === "paper" ||
+                playerSelection === "scissors" && computerSelection === "rock" ||
+                playerSelection === "paper" && computerSelection === "scissors") {announce("lose");}
+        else {announce()};
     }
-    if (playerSelection === computerSelection) {announce("draw");}
-    else if  (playerSelection === "paper" && computerSelection === "rock" ||
-              playerSelection === "rock" && computerSelection === "scissors" ||
-              playerSelection === "scissors" && computerSelection === "paper") {announce("win");}
-    else if  (playerSelection === "rock" && computerSelection === "paper" ||
-              playerSelection === "scissors" && computerSelection === "rock" ||
-              playerSelection === "paper" && computerSelection === "scissors") {announce("lose");}
-    else {announce()};
+    for (let i=0; i<5; i++) {
+        setTimeout(() => {
+            playRound();
+            console.log(`Score: You ${scoreKeeper.playerScore} : PC ${scoreKeeper.pcScore}`)
+            documentScore.innerHTML = (`Score: You ${scoreKeeper.playerScore} : PC ${scoreKeeper.pcScore}`);
+        }, 100);
+    }
+    /* playRound(); */
+    /* console.log(`Score: You ${scoreKeeper.playerScore} : PC ${scoreKeeper.pcScore}`)
+    documentScore.innerHTML = (`Score: You ${scoreKeeper.playerScore} : PC ${scoreKeeper.pcScore}`); */
 }
 
