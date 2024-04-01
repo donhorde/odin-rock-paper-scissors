@@ -3,8 +3,6 @@ const documentText = document.querySelector('.text');
 const documentScore = document.querySelector('.score');
 const keysDiv = document.querySelector('.keys');
 
-playButton.addEventListener('click', () => startGame());
-
 const startGame = () => {
   playButton.style.display = 'none';
   keysDiv.removeChild(playButton);
@@ -24,7 +22,16 @@ const startGame = () => {
   keysDiv.appendChild(rockBtn);
   keysDiv.appendChild(paperBtn);
   keysDiv.appendChild(scisBtn);
+
+  keysDiv.addEventListener('click', (event) => {
+    const choice = event.target.dataset.choice;
+    if (choice !== undefined) {
+      playGame(choice);
+    }
+  });
 };
+
+playButton.addEventListener('click', () => startGame());
 
 const getComputerChoice = () => {
   const value = Math.floor(Math.random() * 3);
@@ -56,10 +63,10 @@ const scoreKeeper = {
   playerScore: 0,
 };
 
-function playGame() {
+function playGame(playerSelection) {
   function playRound() {
-    let playerSelection = prompt('Rock, Paper, Scissors?');
-    if (playerSelection !== null) { playerSelection = playerSelection.toLowerCase(); }
+    /* let playerSelection = prompt('Rock, Paper, Scissors?');
+    if (playerSelection !== null) { playerSelection = playerSelection.toLowerCase(); } */
     const computerSelection = getComputerChoice();
     const announce = (x) => {
       if (x === 'draw') {
