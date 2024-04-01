@@ -1,6 +1,30 @@
 const playButton = document.querySelector('.play');
 const documentText = document.querySelector('.text');
 const documentScore = document.querySelector('.score');
+const keysDiv = document.querySelector('.keys');
+
+playButton.addEventListener('click', () => startGame());
+
+const startGame = () => {
+  playButton.style.display = 'none';
+  keysDiv.removeChild(playButton);
+
+  const rockBtn = document.createElement('button');
+  rockBtn.textContent = 'Rock';
+  rockBtn.setAttribute('data-choice', 'rock');
+
+  const paperBtn = document.createElement('button');
+  paperBtn.textContent = 'Paper';
+  paperBtn.setAttribute('data-choice', 'paper');
+
+  const scisBtn = document.createElement('button');
+  scisBtn.textContent = 'Scissors';
+  scisBtn.setAttribute('data-choice', 'scissors');
+
+  keysDiv.appendChild(rockBtn);
+  keysDiv.appendChild(paperBtn);
+  keysDiv.appendChild(scisBtn);
+};
 
 const getComputerChoice = () => {
   const value = Math.floor(Math.random() * 3);
@@ -33,43 +57,37 @@ const scoreKeeper = {
 };
 
 function playGame() {
-  /* let pcScore = 0;
-    let playerScore = 0; */
-  function playRound(playerSelection, computerSelection) {
-    const userInput = prompt('Rock, Paper, Scissors?');
-    if (userInput !== null) { playerSelection = userInput.toLowerCase(); }
-    computerSelection = getComputerChoice();
+  function playRound() {
+    let playerSelection = prompt('Rock, Paper, Scissors?');
+    if (playerSelection !== null) { playerSelection = playerSelection.toLowerCase(); }
+    const computerSelection = getComputerChoice();
     const announce = (x) => {
       if (x === 'draw') {
         documentText.innerHTML = (`It's a draw!<br>You both chose ${playerSelection}.`);
       } else if (x === 'lose') {
         documentText.innerHTML = (`You lose!<br>${capitalize(computerSelection)} beats ${playerSelection}.`);
-        ++scoreKeeper.pcScore;
+        scoreKeeper.pcScore += 1;
       } else if (x === 'win') {
         documentText.innerHTML = (`You win!<br>${capitalize(playerSelection)} beats ${computerSelection}.`);
-        ++scoreKeeper.playerScore;
+        scoreKeeper.playerScore += 1;
       } else {
         documentText.innerHTML = ('You must choose paper, rock, or scissors.');
       }
     };
-    if (playerSelection === computerSelection) { announce('draw'); } else if (playerSelection === 'paper' && computerSelection === 'rock'
-                || playerSelection === 'rock' && computerSelection === 'scissors'
-                || playerSelection === 'scissors' && computerSelection === 'paper') { announce('win'); } else if (playerSelection === 'rock' && computerSelection === 'paper'
-                || playerSelection === 'scissors' && computerSelection === 'rock'
-                || playerSelection === 'paper' && computerSelection === 'scissors') { announce('lose'); } else { announce(); }
+    if (playerSelection === computerSelection) {
+      announce('draw');
+    } else if ((playerSelection === 'paper' && computerSelection === 'rock')
+                || (playerSelection === 'rock' && computerSelection === 'scissors')
+                || (playerSelection === 'scissors' && computerSelection === 'paper')) {
+      announce('win');
+    } else if ((playerSelection === 'rock' && computerSelection === 'paper')
+                || (playerSelection === 'scissors' && computerSelection === 'rock')
+                || (playerSelection === 'paper' && computerSelection === 'scissors')) {
+      announce('lose');
+    } else {
+      announce();
+    }
   }
-  for (let i = 0; i < 5; i++) {
-    setTimeout(() => {
-      playRound();
-      console.log(`Score: You ${scoreKeeper.playerScore} : PC ${scoreKeeper.pcScore}`);
-      documentScore.innerHTML = (`Score: You ${scoreKeeper.playerScore} : PC ${scoreKeeper.pcScore}`);
-    }, 100);
-  }
-
-  playButton.addEventListener('click', () => playGame());
-  /* playRound(); */
-/*
-    console.log(`Score: You ${scoreKeeper.playerScore} : PC ${scoreKeeper.pcScore}`)
-    documentScore.innerHTML = (`Score: You ${scoreKeeper.playerScore} : PC ${scoreKeeper.pcScore}`);
-    */
+  playRound();
+  documentScore.innerHTML = (`Score: You ${scoreKeeper.playerScore} : PC ${scoreKeeper.pcScore}`);
 }
