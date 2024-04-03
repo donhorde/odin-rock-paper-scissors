@@ -102,8 +102,6 @@ const capitalize = (string) => {
 
 function playGame(playerSelection) {
   function playRound() {
-    /* let playerSelection = prompt('Rock, Paper, Scissors?');
-    if (playerSelection !== null) { playerSelection = playerSelection.toLowerCase(); } */
     const computerSelection = getComputerChoice();
     const announce = (x) => {
       if (x === 'draw') {
