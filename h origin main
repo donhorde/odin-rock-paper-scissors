@@ -1,0 +1,53 @@
+[33mcommit ff3ad458b11f19f6d99d41dc25ad39e609b86a6a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/revisited[m[33m, [m[1;32mrevisited[m[33m)[m
+Author: Don <don.horde@gmail.com>
+Date:   Wed Apr 3 22:18:15 2024 +0200
+
+    add victory conditions, game reset, visual effects
+
+[33mcommit bfa52982cf86317d98b07b60f161104f9c8323ca[m
+Author: Don <don.horde@gmail.com>
+Date:   Mon Apr 1 18:59:20 2024 +0200
+
+    add buttons to control player choice
+
+[33mcommit 521b902fb52941044bbede0c8a5c9193a03de043[m
+Author: Don <don.horde@gmail.com>
+Date:   Mon Apr 1 18:28:48 2024 +0200
+
+    add button controls
+
+[33mcommit 8599ca4f70dd6428460c082255bc5cd42809fc4f[m
+Author: Don <don.horde@gmail.com>
+Date:   Mon Apr 1 17:43:56 2024 +0200
+
+    new branch, apply eslint rules
+
+[33mcommit 39dde22d3e8f88ef265457a5ee90a04ec4ae76ca[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Don <don.horde@gmail.com>
+Date:   Fri Mar 15 22:52:37 2024 +0100
+
+    add playRound function, add scorekeeping
+
+[33mcommit 19fc28a08631d77f7da950fe48e8ecf92eeb51e7[m
+Author: Don <don.horde@gmail.com>
+Date:   Thu Mar 14 21:44:53 2024 +0100
+
+    add visual styles, adjust text behavior
+
+[33mcommit 231e6657791f60b2c59ee37ced2c9dcffd9b8d7e[m
+Author: Don <don.horde@gmail.com>
+Date:   Wed Mar 13 21:42:59 2024 +0100
+
+    add basic HTML interactivity
+
+[33mcommit 712db2ebe5c81fc07d30a545de92aec30dbd40bd[m
+Author: Don <don.horde@gmail.com>
+Date:   Wed Mar 13 21:24:08 2024 +0100
+
+    add basic console functionality, remove excess boilerplate
+
+[33mcommit 2f43406091a52a4661b8000e93324305fa1ceb06[m
+Author: Don <don.horde@gmail.com>
+Date:   Wed Mar 13 20:29:59 2024 +0100
+
+    initial boilerplate commit
