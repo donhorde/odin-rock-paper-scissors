@@ -2,10 +2,20 @@ const playButton = document.querySelector('.play');
 const documentText = document.querySelector('.text');
 const documentScore = document.querySelector('.score');
 const keysDiv = document.querySelector('.keys');
+const documentBg = document.querySelector('body');
+
+const addKeyControls = (event) => {
+  const choice = event.target.dataset.choice;
+  if (choice !== undefined) {
+    playGame(choice);
+  }
+};
 
 const startGame = () => {
   playButton.style.display = 'none';
-  keysDiv.removeChild(playButton);
+  while (keysDiv.firstChild) {
+    keysDiv.removeChild(keysDiv.firstChild);
+  }
 
   const rockBtn = document.createElement('button');
   rockBtn.textContent = 'Rock';
@@ -23,12 +33,44 @@ const startGame = () => {
   keysDiv.appendChild(paperBtn);
   keysDiv.appendChild(scisBtn);
 
-  keysDiv.addEventListener('click', (event) => {
-    const choice = event.target.dataset.choice;
-    if (choice !== undefined) {
-      playGame(choice);
-    }
-  });
+  keysDiv.addEventListener('click', addKeyControls);
+};
+
+const scoreKeeper = {
+  pcScore: 0,
+  playerScore: 0,
+};
+
+const endGame = (result) => {
+  if (result === 'victory') {
+    documentText.innerHTML = 'You are the winner!';
+  } else if (result === 'defeat') {
+    documentText.innerHTML = 'You have been defeated.';
+  }
+  while (keysDiv.firstChild) {
+    keysDiv.removeChild(keysDiv.firstChild);
+  }
+
+  const resetBtn = document.createElement('button');
+  resetBtn.textContent = 'Play again!';
+  resetBtn.classList.add('play');
+  keysDiv.appendChild(resetBtn);
+  const resetGame = () => {
+    scoreKeeper.pcScore = 0;
+    scoreKeeper.playerScore = 0;
+    documentScore.innerHTML = (`Score: You ${scoreKeeper.playerScore} : PC ${scoreKeeper.pcScore}`);
+    documentText.textContent = ('Rock, Paper, Scissors');
+    resetBtn.textContent = ('Play');
+    resetBtn.removeEventListener('click', resetGame);
+    keysDiv.removeEventListener('click', addKeyControls);
+    resetBtn.addEventListener('click', () => startGame());
+  };
+  resetBtn.addEventListener('click', resetGame);
+
+  documentBg.classList.toggle(result);
+  setTimeout(() => {
+    documentBg.classList.toggle(result);
+  }, 3000);
 };
 
 playButton.addEventListener('click', () => startGame());
@@ -56,11 +98,6 @@ const capitalize = (string) => {
   let newString = string.toLowerCase();
   newString = newString.replace(newString[0], newString[0].toUpperCase());
   return newString;
-};
-
-const scoreKeeper = {
-  pcScore: 0,
-  playerScore: 0,
 };
 
 function playGame(playerSelection) {
@@ -97,4 +134,9 @@ function playGame(playerSelection) {
   }
   playRound();
   documentScore.innerHTML = (`Score: You ${scoreKeeper.playerScore} : PC ${scoreKeeper.pcScore}`);
+  if (scoreKeeper.playerScore === 5) {
+    endGame('victory');
+  } else if (scoreKeeper.pcScore === 5) {
+    endGame('defeat');
+  }
 }

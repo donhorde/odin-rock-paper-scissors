@@ -7,6 +7,7 @@ body {
     text-align: center;
     margin: 0;
     background-color: hsl(212, 45%, 89%);
+    transition: background-color 0.5s;
 }
 h1 {
     font-weight: 700;
@@ -37,10 +38,13 @@ button:hover {
 .text {
     background-color: white;
     width: 100%;
-    min-height: 3rem;
+    min-height: 4rem;
     padding: 10px 0;
     border-radius: 10px;
     overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .keys {
     padding: 15px 0px;
@@ -55,11 +59,7 @@ button:hover {
 .play {
     grid-column: 2 / 3;
 }
-/* 
-#bt_equals {
-    grid-column: span 2;
-}
- */
+
 .attribution {
     position: absolute;
     bottom: 5px; 
@@ -75,4 +75,11 @@ button:hover {
     padding: 10px 15px;
     margin: 0px;
     max-width: 270px;
+}
+
+.defeat {
+    background-color: hsl(0, 69%, 22%);
+}
+.victory {
+    background-color: hsl(125, 70%, 61%);
 }
