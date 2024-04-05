@@ -51,26 +51,35 @@ const endGame = (result) => {
     keysDiv.removeChild(keysDiv.firstChild);
   }
 
+  const toggleBackground = (value) => {
+    documentBg.classList.toggle(value);
+  };
+
+  toggleBackground(result);
+  const toggleBackgroundDelay = setTimeout(() => toggleBackground(result), 3000);
+
   const resetBtn = document.createElement('button');
   resetBtn.textContent = 'Play again!';
   resetBtn.classList.add('play');
   keysDiv.appendChild(resetBtn);
+
   const resetGame = () => {
     scoreKeeper.pcScore = 0;
     scoreKeeper.playerScore = 0;
     documentScore.innerHTML = (`Score: You ${scoreKeeper.playerScore} : PC ${scoreKeeper.pcScore}`);
     documentText.textContent = ('Rock, Paper, Scissors');
     resetBtn.textContent = ('Play');
+
+    if (documentBg.classList.contains(result)) {
+      clearTimeout(toggleBackgroundDelay);
+      toggleBackground(result);
+    }
+
     resetBtn.removeEventListener('click', resetGame);
     keysDiv.removeEventListener('click', addKeyControls);
     resetBtn.addEventListener('click', () => startGame());
   };
   resetBtn.addEventListener('click', resetGame);
-
-  documentBg.classList.toggle(result);
-  setTimeout(() => {
-    documentBg.classList.toggle(result);
-  }, 3000);
 };
 
 playButton.addEventListener('click', () => startGame());
