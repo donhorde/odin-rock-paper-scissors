@@ -11,7 +11,7 @@ const addKeyControls = (event) => {
   }
 };
 
-const startGame = () => {
+function startGame() {
   playButton.style.display = 'none';
   while (keysDiv.firstChild) {
     keysDiv.removeChild(keysDiv.firstChild);
@@ -34,26 +34,25 @@ const startGame = () => {
   keysDiv.appendChild(scisBtn);
 
   keysDiv.addEventListener('click', addKeyControls);
-};
+}
 
 const scoreKeeper = {
-  pcScore: 0,
-  playerScore: 0,
+  pc: 0,
+  player: 0,
 };
 
-const endGame = (result) => {
+function endGame(result) {
   if (result === 'victory') {
     documentText.innerHTML = 'You are the winner!';
   } else if (result === 'defeat') {
     documentText.innerHTML = 'You have been defeated.';
   }
+
   while (keysDiv.firstChild) {
     keysDiv.removeChild(keysDiv.firstChild);
   }
 
-  const toggleBackground = (value) => {
-    documentBg.classList.toggle(value);
-  };
+  const toggleBackground = (value) => documentBg.classList.toggle(value);
 
   toggleBackground(result);
   const toggleBackgroundDelay = setTimeout(() => toggleBackground(result), 3000);
@@ -64,9 +63,9 @@ const endGame = (result) => {
   keysDiv.appendChild(resetBtn);
 
   const resetGame = () => {
-    scoreKeeper.pcScore = 0;
-    scoreKeeper.playerScore = 0;
-    documentScore.innerHTML = (`Score: You ${scoreKeeper.playerScore} : PC ${scoreKeeper.pcScore}`);
+    scoreKeeper.pc = 0;
+    scoreKeeper.player = 0;
+    documentScore.innerHTML = (`Score: You ${scoreKeeper.player} : PC ${scoreKeeper.pc}`);
     documentText.textContent = ('Rock, Paper, Scissors');
     resetBtn.textContent = ('Play');
 
@@ -80,7 +79,7 @@ const endGame = (result) => {
     resetBtn.addEventListener('click', () => startGame());
   };
   resetBtn.addEventListener('click', resetGame);
-};
+}
 
 playButton.addEventListener('click', () => startGame());
 
@@ -109,41 +108,45 @@ const capitalize = (string) => {
   return newString;
 };
 
-function playGame(playerSelection) {
+function playGame(playerChoice) {
   function playRound() {
-    const computerSelection = getComputerChoice();
-    const announce = (x) => {
-      if (x === 'draw') {
-        documentText.innerHTML = (`It's a draw!<br>You both chose ${playerSelection}.`);
-      } else if (x === 'lose') {
-        documentText.innerHTML = (`You lose!<br>${capitalize(computerSelection)} beats ${playerSelection}.`);
-        scoreKeeper.pcScore += 1;
-      } else if (x === 'win') {
-        documentText.innerHTML = (`You win!<br>${capitalize(playerSelection)} beats ${computerSelection}.`);
-        scoreKeeper.playerScore += 1;
-      } else {
-        documentText.innerHTML = ('You must choose paper, rock, or scissors.');
+    const computerChoice = getComputerChoice();
+    const announce = (result) => {
+      switch (result) {
+        case 'draw':
+          documentText.innerHTML = (`It's a draw!<br>You both chose ${playerChoice}.`);
+          break;
+        case 'lose':
+          documentText.innerHTML = (`You lose!<br>${capitalize(computerChoice)} beats ${playerChoice}.`);
+          scoreKeeper.pc += 1;
+          break;
+        case 'win':
+          documentText.innerHTML = (`You win!<br>${capitalize(playerChoice)} beats ${computerChoice}.`);
+          scoreKeeper.player += 1;
+          break;
+        default:
+          documentText.innerHTML = ('You must choose paper, rock, or scissors.');
       }
     };
-    if (playerSelection === computerSelection) {
+    if (playerChoice === computerChoice) {
       announce('draw');
-    } else if ((playerSelection === 'paper' && computerSelection === 'rock')
-                || (playerSelection === 'rock' && computerSelection === 'scissors')
-                || (playerSelection === 'scissors' && computerSelection === 'paper')) {
+    } else if ((playerChoice === 'paper' && computerChoice === 'rock')
+                || (playerChoice === 'rock' && computerChoice === 'scissors')
+                || (playerChoice === 'scissors' && computerChoice === 'paper')) {
       announce('win');
-    } else if ((playerSelection === 'rock' && computerSelection === 'paper')
-                || (playerSelection === 'scissors' && computerSelection === 'rock')
-                || (playerSelection === 'paper' && computerSelection === 'scissors')) {
+    } else if ((playerChoice === 'rock' && computerChoice === 'paper')
+                || (playerChoice === 'scissors' && computerChoice === 'rock')
+                || (playerChoice === 'paper' && computerChoice === 'scissors')) {
       announce('lose');
     } else {
       announce();
     }
   }
   playRound();
-  documentScore.innerHTML = (`Score: You ${scoreKeeper.playerScore} : PC ${scoreKeeper.pcScore}`);
-  if (scoreKeeper.playerScore === 5) {
+  documentScore.innerHTML = (`Score: You ${scoreKeeper.player} : PC ${scoreKeeper.pc}`);
+  if (scoreKeeper.player === 5) {
     endGame('victory');
-  } else if (scoreKeeper.pcScore === 5) {
+  } else if (scoreKeeper.pc === 5) {
     endGame('defeat');
   }
 }
